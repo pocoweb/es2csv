@@ -234,7 +234,7 @@ class Es2csv:
                     timer += 1
                     bar.update(timer)
                     line_as_dict = json.loads(line)
-                    line_dict_utf8 = {k: v.encode('utf8') if isinstance(v, unicode) else v for k, v in line_as_dict.items()}
+                    line_dict_utf8 = {k: v for k, v in line_as_dict.items()}
                     csv_writer.writerow(line_dict_utf8)
                 output_file.close()
                 bar.finish()
@@ -259,7 +259,7 @@ def main():
     p.add_argument('-t', '--tags', dest='tags', type=str, nargs='+', help='Query tags.')
     p.add_argument('-o', '--output_file', dest='output_file', type=str, required=True, metavar='FILE', help='CSV file location.')
     p.add_argument('-f', '--fields', dest='fields', default=['_all'], type=str, nargs='+', help='List of selected fields in output. Default is %(default)s.')
-    p.add_argument('-d', '--delimiter', dest='delimiter', default=',', type=str, help='Delimiter to use in CSV file. Default is "%(default)s".')
+    p.add_argument('-d', '--delimiter', dest='delimiter', default='\t', type=str, help='Delimiter to use in CSV file. Default is "%(default)s".')
     p.add_argument('-m', '--max', dest='max_results', default=0, type=int, metavar='INTEGER', help='Maximum number of results to return. Default is %(default)s.')
     p.add_argument('-s', '--scroll_size', dest='scroll_size', default=100, type=int, metavar='INTEGER', help='Scroll size for each batch of results. Default is %(default)s.')
     p.add_argument('-k', '--kibana_nested', dest='kibana_nested', action='store_true', help='Format nested fields in Kibana style.')
